@@ -1,0 +1,262 @@
+/* Set height of body and the document to 100% to enable "full page tabs" */
+body {
+  height: 100%;
+  margin: 0;
+  font-family: Arial;
+  background-color: #888888;
+}
+
+img {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+/* Style tab links */
+.tablink {
+  background-color: #282828;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 25%;
+}
+
+.tablink:hover {
+  background-color: #4D4D4D;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+
+/*Tab content for all tabs */
+.tabcontent {
+  color: #000;
+  display: none;
+  padding: inherit;
+  /*padding: 100px 20px;*/
+  height: 100%;
+}
+
+/*Table for keywords */
+
+table.keywordstable {
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  width: 22.99%;
+  padding: 12px 29px;
+  height: 5%;
+}
+
+.keywordstable th {
+  text-align: center;
+  padding: 10px;
+  color: #fff;
+  background-color: #fff;
+  border: 2px solid #000;
+  background-color: #404040;
+}
+
+.keywordstable td {
+  padding: 10px;
+  color: #000;
+  background-color: #fff;
+  border: 2px solid #000;
+}
+
+.keywordstable tr: {
+  background-color: #fff;
+}
+
+/*Table for websites */
+table.websitestable {
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  width: 22.99%;
+  padding: 12px 29px;
+  height: 5%;
+}
+
+.websitestable th {
+  text-align: center;
+  padding: 10px;
+  color: #fff;
+  background-color: #fff;
+  border: 2px solid #000;
+  background-color: #404040;
+}
+
+.websitestable td {
+  padding: 10px;
+  color: #000;
+  background-color: #fff;
+  border: 2px solid #000;
+}
+
+.websitestable tr: {
+  background-color: #fff;
+}
+
+/*Table for Dashboard output page */
+table.dashboardtable {
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  padding: 5px;
+  height: auto;
+}
+
+.dashboardtable th {
+  text-align: center;
+  padding: 10px;
+  color: #fff;
+  background-color: #fff;
+  border: 2px solid #000;
+  background-color: #343435;
+}
+
+.dashboardtable td {
+  padding: 10px;
+  color: #000;
+  background-color: #fff;
+  border: 2px solid #000;
+}
+
+.dashboardtable tr: {
+  background-color: #fff;
+}
+
+::placeholder {
+  color: #fff;
+}
+
+#txtVal {
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #282828;
+  border: 1px solid #fff;
+  color: #fff;
+  padding: 12px 29px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+#webTxt {
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #282828;
+  border: 1px solid #fff;
+  color: white;
+  padding: 12px 29px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+#frequency {
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #282828;
+  border: 1px solid #fff;
+  color: white;
+  padding: 12px 29px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+/*Button*/
+.button {
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #282828;
+  border: 1px solid #fff;
+  color: white;
+  padding: 12px 29px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor:pointer;
+  transition: all 0.3s;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.3s;
+}
+
+.button span:after {
+  content: '\002B';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.3s;
+}
+
+.button:hover span {
+  padding-right: 15px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+/* Centering elements */
+.centered {
+  text-align: center;
+  padding: 70px 20px;
+  }
+
+/* Footer content */
+#footer {
+    padding:1px;
+    left: 0;
+    bottom: 0;
+    width: auto;
+    text-align: center;
+    color:#fff;
+    display:absolute;
+  }
+
+/* Horizontal line */
+hr {
+    border: 1px solid #000;
+  }
+
+/* Header */
+.dashboardheader {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  padding-top: 3em;
+}
+
+
+/*Access management and settings tab content */
+.accesscontent {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  padding-top: 3em;
+}
+
+.settingcontent {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  padding-top: 3em;
+}
