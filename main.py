@@ -1,202 +1,206 @@
-import pymysql
-from app import app
-from db_config import mysql
+import sqlite3
 from flask import jsonify, request
+from flask_cors import CORS
+from flask import Flask
+from scrapy.crawler import CrawlerProcess
+import crawler as crawler
+import json
 
+
+conn = None
+c = None
+conn = sqlite3.connect('crawler.db',check_same_thread=False)
+c = conn.cursor()
+app = Flask(__name__)
+cors = CORS(app)
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+
+
+@app.route('/startCrawler', methods = ['GET'])
+def get_crawlerData():
+
+    """
+    with conn:
+        c.execute("DELETE from Crawldata")
+        conn.commit()
+    """
+    #process = CrawlerProcess()
+    #process.crawl(crawler.WebCrawler)
+    #process.start()
+    
+    
+    c.execute("SELECT abstract,category,Fetchdate as date, url as link from CrawlData")
+    data = c.fetchall()
+    formatData = []
+    for l in data:
+        temp = {
+            "abstract": l[0],
+             "category": l[1], 
+             "date": l[2], 
+             "link": l[3]
+        }
+        formatData.append(temp)
+
+
+
+    
+    resp = jsonify(formatData)
+    resp.status_code = 200
+    return resp
+
+    
+
+    """
+    return jsonify(
+    [
+        {"abstract": "test", "category": "journal", "date": "12-02-2020", "link": "www.google.com"},
+        {"abstract": "test", "category": "journal", "date": "12-02-2020", "link": "www.google.com"},
+        {"abstract": "test", "category": "journal", "date": "12-02-2020", "link": "www.google.com"}
+    ]
+    )
+    """
 
 @app.route('/add', methods=['POST'])
 def add_user():
-    try:
         _json = request.json
         _name = _json['name']
         _email = _json['email']
         _password = _json['pwd']
+
         # validate the received values
         if _name and _email and _password and request.method == 'POST':
-            # do not save password as a plain text
-            _hashed_password = _password
             # save edits
-            sql = "INSERT INTO tbl_user(user_name, user_email, user_password) VALUES(%s, %s, %s)"
-            data = (_name, _email, _hashed_password,)
-            conn = mysql.connect()
-            cursor = conn.cursor()
-            cursor.execute(sql, data)
-            conn.commit()
+            with conn:
+                c.execute("INSERT INTO users (username,email, password) VALUES(:name, :email, :password)",
+                          {'name': _name, 'email': _email, 'password': _password})
+                conn.commit()
             resp = jsonify('User added successfully!')
             resp.status_code = 200
             return resp
-        else:
-            return not_found()
-    except Exception as e:
-        print(e)
-    finally:
-        cursor.close()
-        conn.close()
-
 
 @app.route('/users')
 def users():
-    try:
-        conn = mysql.connect()
-        cursor = conn.cursor(pymysql.cursors.DictCursor)
-        cursor.execute("SELECT * FROM tbl_user")
-        rows = cursor.fetchall()
-        resp = jsonify(rows)
+        c.execute("SELECT * from users")
+        data = c.fetchall()
+        resp = jsonify(data)
         resp.status_code = 200
         return resp
-    except Exception as e:
-        print(e)
-    finally:
-        cursor.close()
-        conn.close()
-
 
 @app.route('/user/<int:id>')
 def user(id):
-    try:
-        conn = mysql.connect()
-        cursor = conn.cursor(pymysql.cursors.DictCursor)
-        cursor.execute("SELECT * FROM tbl_user WHERE user_id=%s", id)
-        row = cursor.fetchone()
-        resp = jsonify(row)
+        c.execute("SELECT * from users WHERE UserID = :id", {'id': id})
+        row = c.fetchone()
+        out = [item for t in row for item in t]
+        resp = jsonify(out)
         resp.status_code = 200
         return resp
-    except Exception as e:
-        print(e)
-    finally:
-        cursor.close()
-        conn.close()
 
-
-@app.route('/update', methods=['POST'])
-def update_user():
-    try:
-        _json = request.json
-        _id = _json['id']
-        _name = _json['name']
-        _email = _json['email']
-        _password = _json['pwd']
-        # validate the received values
-        if _name and _email and _password and _id and request.method == 'POST':
-            # do not save password as a plain text
-            _hashed_password = _password
-            # save edits
-            sql = "UPDATE tbl_user SET user_name=%s, user_email=%s, user_password=%s WHERE user_id=%s"
-            data = (_name, _email, _hashed_password, _id,)
-            conn = mysql.connect()
-            cursor = conn.cursor()
-            cursor.execute(sql, data)
-            conn.commit()
-            resp = jsonify('User updated successfully!')
-            resp.status_code = 200
-            return resp
-        else:
-            return not_found()
-    except Exception as e:
-        print(e)
-    finally:
-        cursor.close()
-        conn.close()
-
-
-@app.route('/delete/<int:id>')
+@app.route('/deleteUser/<int:id>')
 def delete_user(id):
-    try:
-        conn = mysql.connect()
-        cursor = conn.cursor()
-        cursor.execute("DELETE FROM tbl_user WHERE user_id=%s", (id,))
+    with conn:
+        c.execute("DELETE from users WHERE UserID = :id", {'id': id})
         conn.commit()
         resp = jsonify('User deleted successfully!')
         resp.status_code = 200
         return resp
-    except Exception as e:
-        print(e)
-    finally:
-        cursor.close()
-        conn.close()
 
+@app.route('/keywords', methods=['GET'])
+def get_keywords():
+        c.execute("SELECT keywords from keywords")
+        row = c.fetchall()
+        out = [item for t in row for item in t]
+        resp = jsonify(out)
+        resp.status_code = 200
+        return resp
 
 @app.route('/addKeyword', methods=['POST'])
 def add_Keyword():
-    try:
         _json = request.json
         _keyword = _json['keyword']
+        _keyword = str(_keyword)
+
         # validate the received values
         if _keyword and request.method == 'POST':
-            # do not save password as a plain text
-            sql = "INSERT INTO tbl_keywords(keyword) VALUES(%s)"
-            data = ( _keyword,)
-            conn = mysql.connect()
-            cursor = conn.cursor()
-            cursor.execute(sql, data)
-            conn.commit()
+            with conn:
+                c.execute("INSERT INTO keywords VALUES(:keyword)",
+                          {'keyword': _keyword})
+                conn.commit()
             resp = jsonify('Keyword added successfully!')
             resp.status_code = 200
             return resp
-        else:
-            return not_found()
-    except Exception as e:
-        print(e)
-    finally:
-        cursor.close()
-        conn.close()
+
+@app.route('/websites', methods=['GET'])
+def get_websites():
+        c.execute("SELECT * from websites")
+        row = c.fetchall()
+        out = [item for t in row for item in t]
+        resp = jsonify(out)
+        resp.status_code = 200
+        return resp
 
 @app.route('/addWebsite', methods=['POST'])
 def add_Website():
-    try:
         _json = request.json
-        _website = _json['Website']
+        _website = _json['website']
+
         # validate the received values
         if _website and request.method == 'POST':
-            # do not save password as a plain text
-            sql = "INSERT INTO tbl_websites(website) VALUES(%s)"
-            data = ( _website,)
-            conn = mysql.connect()
-            cursor = conn.cursor()
-            cursor.execute(sql, data)
-            conn.commit()
+            with conn:
+                c.execute("INSERT INTO websites VALUES(:websites)",
+                          {'websites': _website})
+                conn.commit()
             resp = jsonify('Website added successfully!')
             resp.status_code = 200
             return resp
-        else:
-            return not_found()
-    except Exception as e:
-        print(e)
-    finally:
-        cursor.close()
-        conn.close()
 
-@app.route('/deleteKeyword/<String:keyword>')
-def delete_user(keyword):
-    try:
-        conn = mysql.connect()
-        cursor = conn.cursor()
-        cursor.execute("DELETE FROM tbl_keywords WHERE keyword=%s", (keyword,))
+@app.route('/Crawler', methods=['GET'])
+def get_crawler():
+    c.execute("SELECT abstract,category,Fetchdate as date, url as link from CrawlData")
+    data = c.fetchall()   
+    resp = jsonify(data)
+    resp.status_code = 200
+    return resp
+  
+@app.route('/runCrawler', methods = ['GET'])
+def run_crawler():
+    with conn:
+        c.execute("DELETE from Crawldata")
+        conn.commit()
+    process = CrawlerProcess()
+    process.crawl(crawler.WebCrawler)
+    process.start()
+    #resp = jsonify('Crawler Successful!')
+    #resp.status_code = 200
+    #return resp
+
+
+@app.route('/deleteCrawl/<int:id>', methods = ['DELETE'])
+def delete_Crawl(id):
+    with conn:
+        c.execute("DELETE from CrawlData WHERE ID = :id", {'id': id})
+        conn.commit()
+        resp = jsonify('Record deleted successfully!')
+        resp.status_code = 200
+        return resp
+        
+@app.route('/deleteKeyword/<string:word>', methods = ['DELETE'])
+def delete_keyword(word):
+    with conn:
+        c.execute("DELETE from keywords WHERE keywords = :id", {'id': word})
         conn.commit()
         resp = jsonify('Keyword deleted successfully!')
         resp.status_code = 200
         return resp
-    except Exception as e:
-        print(e)
-    finally:
-        cursor.close()
-        conn.close()
 
-@app.route('/deleteWebsite/<String:Website>')
-def delete_user(Website):
-    try:
-        conn = mysql.connect()
-        cursor = conn.cursor()
-        cursor.execute("DELETE FROM tbl_websites WHERE website=%s", (Website,))
+@app.route('/deleteWebsite/<string:word>', methods = ['DELETE'])
+def delete_website(word):
+    with conn:
+        c.execute("DELETE from websites WHERE websites = :id", {'id': word})
         conn.commit()
         resp = jsonify('Website deleted successfully!')
         resp.status_code = 200
         return resp
-    except Exception as e:
-        print(e)
-    finally:
-        cursor.close()
-        conn.close()
+
 
 @app.errorhandler(404)
 def not_found(error=None):
@@ -206,8 +210,9 @@ def not_found(error=None):
     }
     resp = jsonify(message)
     resp.status_code = 404
-
     return resp
 
 if __name__ == "__main__":
+    #run_crawler()
     app.run()
+

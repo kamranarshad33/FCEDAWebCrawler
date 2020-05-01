@@ -1,0 +1,11 @@
+.footer{
+  background: #D1D1D1;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 20px;
+  border-top: 2px solid darkgray;
+  border-bottom: 2px solid darkgray;
+  min-height: 100px;
+}
