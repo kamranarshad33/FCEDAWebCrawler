@@ -202,6 +202,23 @@ def delete_website(word):
         return resp
 
 
+@app.route('/UpdateFreq', methods=['PUT'])
+def update_freq():
+        _json = request.json
+        _freq = _json['frequency']
+
+        # validate the received values
+        if _freq and request.method == 'PUT':
+            with conn:
+                c.execute("UPDATE frequency set frequency = :freq",
+                          {'freq': _freq})
+                conn.commit()
+            resp = jsonify('Frequency Updated Successfully!')
+            resp.status_code = 200
+            return resp
+
+
+
 @app.errorhandler(404)
 def not_found(error=None):
     message = {
