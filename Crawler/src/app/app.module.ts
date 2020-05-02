@@ -9,6 +9,7 @@ import { ListComponent } from './dashboard/list/list.component';
 import { ManageComponent } from './manage/manage.component';
 import { KeywordsComponent } from './manage/keywords/keywords.component';
 import { WebsitesComponent } from './manage/websites/websites.component';
+import { FrequencyComponent } from './manage/frequency/frequency.component';
 import { AccessComponent } from './access/access.component';
 import { SettingsComponent } from './settings/settings.component';
 import { WordsService } from './words.service';
@@ -26,6 +27,7 @@ import { FooterComponent } from './footer/footer.component';
     ManageComponent,
     KeywordsComponent,
     WebsitesComponent,
+	FrequencyComponent,
     AccessComponent,
     SettingsComponent,
     FooterComponent,
