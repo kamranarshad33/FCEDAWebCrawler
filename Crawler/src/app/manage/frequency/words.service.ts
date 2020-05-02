@@ -16,15 +16,13 @@ export class WordsService implements OnInit{
 
     }
 
-//    url: string = 'http://127.0.0.1:5000/getFreq';
+    url: string = 'http://127.0.0.1:5000/getFreq';
     url2: string = "http://127.0.0.1:5000/UpdateFreq";
-
-// get function needs to be added in main.py first
-/*    
+  
     getFrequency(){
         return this.httpClient.get(this.url);
     }
-*/
+
 
     putFrequency(input: HTMLInputElement){
         const headers = new HttpHeaders({ 'Content-Type': 'application/json',

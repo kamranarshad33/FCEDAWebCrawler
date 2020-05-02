@@ -213,11 +213,9 @@ def update_freq():
                 c.execute("UPDATE frequency set frequency = :freq",
                           {'freq': _freq})
                 conn.commit()
-            resp = jsonify('Frequency Updated Successfully!')
+            resp = jsonify('Frequency updated successfully!')
             resp.status_code = 200
             return resp
-
-
 
 @app.errorhandler(404)
 def not_found(error=None):
