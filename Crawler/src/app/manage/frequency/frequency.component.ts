@@ -27,14 +27,14 @@ export class FrequencyComponent implements OnInit {
   ngOnInit() {
     
     }
-
+/*
     getFrequency() {
       this.wordService.getFrequency()
       .subscribe(response => {
         this.frequency = response;
       });
     }
-
+*/
   
   
   putFrequency(frequency: HTMLInputElement) {

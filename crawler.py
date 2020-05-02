@@ -17,7 +17,7 @@ class WebCrawler(scrapy.Spider):
 
     print(out)
     name = "WebCrawler"
-    start_urls = ['https://www.bisnow.com/', 'https://www.washingtonpost.com/regional/' , 'https://www.bizjournals.com/washington/', 'https://www.tysonsreporter.com/', 'https://www.bizjournals.com/atlanta/', 'https://www.bizjournals.com/houston/', 'https://www.bizjournals.com/denver/', 'https://www.ajc.com/', 'https://www.chron.com/', 'https://www.denverpost.com/', 'https://dc.citybizlist.com/', 'https://www.americaninno.com/dc/', 'https://www.virginiabusiness.com/news/regions/northern-virginia/', 'https://www.bloomberg.com/deals', 'https://federalnewsnetwork.com/category/contracting/', 'https://builtin.com/', 'https://www.americaninno.com/', 'https://pitchbook.com/news', 'https://www.insidenova.com/business_voice/' , 'www.washingtontechnology.com', 'www.technical.ly.com']
+    start_urls = out
     allowed_domains = ['technet.net', 'bisnow.com', 'washingtonpost.com', 
     'bizjournals.com', 'tysonsreporter.com', ' izjournals.com/atlanta', 
     'bizjournals.com/houston', 'bizjournals.com', 'ajc.com',
@@ -26,6 +26,7 @@ class WebCrawler(scrapy.Spider):
      'bloomberg.com', 'federalnewsnetwork.com',
      'forbes.com', 'thehill.com', 
      'inc.com','washingtontechnology.com', 'technical.ly.com']
+
     rules = [
         Rule(
             LinkExtractor(
@@ -36,6 +37,14 @@ class WebCrawler(scrapy.Spider):
                 callback="parse"
         )
     ]
+
+    def get_freq(self):
+        conn = sqlite3.connect('crawler.db',check_same_thread=False)
+        c = conn.cursor()
+        c.execute("SELECT frequency from frequency")
+        data = c.fetchall()
+        out = [item for t in data for item in t]
+        return int(out[0])
 
     def get_keywords(self):
         conn = sqlite3.connect('crawler.db',check_same_thread=False)
@@ -66,7 +75,8 @@ class WebCrawler(scrapy.Spider):
                 text = soup.find_all(text=True)
                 title = soup.find('title')
                 numOfOccur = self.wordCount(text)
-                if numOfOccur[1] >= 3:
+                freq = self.get_freq()
+                if numOfOccur[1] >= freq:
                     replaced = False
                     for i in range(len(urlList)):
                         if str(urlList[i][1]) in str(link.url):
@@ -81,7 +91,6 @@ class WebCrawler(scrapy.Spider):
                 print("keyword --> " + str(link[0]))        
                 print("link with keywords --> " + str(link[1]))
                 print("abs --> " + str(link[2]))
-
 
     def populateDB(self, keyword, link, abstract):
         conn = sqlite3.connect('crawler.db',check_same_thread=False)
