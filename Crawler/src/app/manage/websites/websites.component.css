@@ -108,3 +108,12 @@ tr {
   text-align: center;
   color: #000;
 }
+
+.btn-outline-secondary{
+  float: right;
+  border: #fff;
+}
+
+.btn-outline-secondary:hover {
+  background-color: red;
+}

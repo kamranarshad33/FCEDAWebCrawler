@@ -46,18 +46,16 @@ table {
     display: inline-block;
     font-size: 16px;
   }
-
-
-
-#frequency {
-        margin-left: auto;
-        margin-right: auto;
-        margin-bottom: 5em;
-        background-color: #343435;
-        border: 1px solid #fff;
-        color: white;
-    }
     
-    ::placeholder {
-        color: #fff;
-      }
+  ::placeholder {
+    color: #fff;
+    }
+
+.btn-outline-secondary{
+  float: right;
+  border: #fff;
+}
+
+.btn-outline-secondary:hover {
+  background-color: red;
+}
