@@ -28,7 +28,7 @@ export class FrequencyComponent implements OnInit {
     
     }
 
-    getFrequency() {
+    getFrequency(frequency: String) {
       this.wordService.getFrequency()
       .subscribe(response => {
         this.frequency = response;
