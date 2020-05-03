@@ -20,7 +20,7 @@ import { WordsService } from './words.service';
   
 })
 export class FrequencyComponent implements OnInit {
-
+frequency;
 
   constructor(private wordService: WordsService) {}
   
@@ -28,7 +28,7 @@ export class FrequencyComponent implements OnInit {
     
     }
 
-    getFrequency(frequency: String) {
+    getFrequency() {
       this.wordService.getFrequency()
       .subscribe(response => {
         this.frequency = response;
