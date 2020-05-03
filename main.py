@@ -213,9 +213,19 @@ def update_freq():
                 c.execute("UPDATE frequency set frequency = :freq",
                           {'freq': _freq})
                 conn.commit()
-            resp = jsonify('Frequency updated successfully!')
+            resp = jsonify('Frequency Updated Successfully!')
             resp.status_code = 200
             return resp
+
+@app.route('/freq', methods=['GET'])
+def get_freq():
+        c.execute("SELECT * from freq")
+        row = c.fetchall()
+        out = [item for t in row for item in t]
+        resp = jsonify(out[0])
+        resp.status_code = 200
+        return resp
+
 
 @app.errorhandler(404)
 def not_found(error=None):
