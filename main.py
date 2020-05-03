@@ -219,7 +219,7 @@ def update_freq():
 
 @app.route('/freq', methods=['GET'])
 def get_freq():
-        c.execute("SELECT * from freq")
+        c.execute("SELECT * from frequency")
         row = c.fetchall()
         out = [item for t in row for item in t]
         resp = jsonify(out[0])
@@ -239,5 +239,5 @@ def not_found(error=None):
 
 if __name__ == "__main__":
     #run_crawler()
-    app.run()
+    app.run(host='0.0.0.0')
 
