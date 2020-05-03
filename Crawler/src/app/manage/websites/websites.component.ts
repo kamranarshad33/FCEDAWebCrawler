@@ -5,12 +5,14 @@ import { WordsService } from './words.service';
   selector: 'app-websites',
   styleUrls: ['./websites.component.css'],
   template: `
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <body>
   <div class="main">
   <h2>Websites</h2>
   
 <input 
     (keyup.enter)="createWebsite(website)" #website
-    type="text" class="form-control">
+    type="text" class="form-control" placeholder="Enter Websites..">
     <hr/>
     <button class="btn btn-info" (click)="getWebsite(); toggleDisplay();"><span>Show Websites </span></button>
     
@@ -21,11 +23,12 @@ import { WordsService } from './words.service';
             *ngFor="let website of websites"
             class="list-group-item">
             {{ website }}
-            <button class="btn btn-outline-secondary" (click)="removeWebsite(website)">Delete</button>
+            <button class="btn btn-outline-secondary" (click)="removeWebsite(website)"><i class="fa fa-trash"></i></button>
         </li>
       </ul>
     </div>
   </div>
+  </body>
   `
 
   
@@ -52,6 +55,7 @@ export class WebsitesComponent implements OnInit {
   
   createWebsite(website: HTMLInputElement) {
     this.wordService.postWebsite(website);
+    this.websites.push(website.value);
   }
 
   toggleDisplay() {
@@ -63,7 +67,9 @@ removeWebsite(website): void {
   (
     _ => console.log(website + " has been deleted")
   );
+  this.websites = this.websites.filter(w => w !== website);
 }
+
   
 }
   

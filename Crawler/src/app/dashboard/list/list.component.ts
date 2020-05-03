@@ -4,40 +4,9 @@ import { WordsService } from './words.service';
 
 @Component({
   selector: 'app-list',
-  /*templateUrl: './list.component.html',*/
+  //templateUrl: './list.component.html'
   styleUrls: ['./list.component.css'],
-  /*
   template: `
-  <div *ngIf = "!isShow">
-  <div class="row">
-  <table>
-    <thead>
-    <tr>
-      <th>Date</th>
-      <th>Category</th>
-      <th>Link</th>
-      <th>Abstract</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let word of words;">
-      <td>{{ word.date }}</td>
-      <td>{{ word.category }}</td>
-      <td><a [href] = "word.link" target="_blank">{{ word.link }}</a></td>
-      <td>{{ word.abstract }}</td>
-    </tr>
-    </tbody>
-  </table>
-  </div>
-  </div>
-  <div class="row">
-  <button (click)="runCrawler(); toggleDisplay();"><span>Run Crawler</span></button>
-  </div>
-  `,
-  */
- template: `
- 
-
   <!-- Header -->
   <div *ngIf = "isShow">
     <header class="masthead d-flex">
