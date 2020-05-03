@@ -13,13 +13,14 @@ import { WordsService } from './words.service';
     (keyup.enter)="putFrequency(frequency)" #frequency
     type="text" class="form-control">
     <hr/>
-	<p> The current frequency is {{ frequency }}</p>
+	<!-- <p> The current frequency is </p> -->
   </div>
   `
 
   
 })
 export class FrequencyComponent implements OnInit {
+// frequencyCurrent;
 frequency;
 
   constructor(private wordService: WordsService) {}
@@ -27,15 +28,14 @@ frequency;
   ngOnInit() {
     
     }
-
+/*
     getFrequency() {
       this.wordService.getFrequency()
       .subscribe(response => {
         this.frequency = response;
       });
     }
-  
-  
+*/  
   putFrequency(frequency: HTMLInputElement) {
     this.wordService.putFrequency(frequency);
   }

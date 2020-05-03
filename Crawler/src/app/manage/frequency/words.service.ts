@@ -16,7 +16,7 @@ export class WordsService implements OnInit{
 
     }
 
-    url: string = 'http://0.0.0.0:5000/freq';
+    url: string = "http://0.0.0.0:5000/freq";
     url2: string = "http://0.0.0.0:5000/UpdateFreq";
   
     getFrequency(){
