@@ -16,8 +16,8 @@ export class WordsService implements OnInit{
 
     }
 
-    url: string = 'http://127.0.0.1:5000/getFreq';
-    url2: string = "http://127.0.0.1:5000/UpdateFreq";
+    url: string = 'http://0.0.0.01:5000/getFreq';
+    url2: string = "http://0.0.0.0:5000/UpdateFreq";
   
     getFrequency(){
         return this.httpClient.get(this.url);
