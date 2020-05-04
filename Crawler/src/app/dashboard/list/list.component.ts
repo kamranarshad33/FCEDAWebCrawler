@@ -15,7 +15,7 @@ import { WordsService } from './words.service';
         <h3 class="mb-5">
           <em>Web Crawler created by Team Crawler</em>
         </h3>
-        <button class="btn btn-secondary btn-lg" (click)="runCrawler(); toggleDisplay();">Run Crawler</button>
+        <button class="btn btn-secondary btn-lg" (click)="runCrawler(); toggleDisplay();">Access Dashboard</button>
       </div>
       </header>
   </div>  
