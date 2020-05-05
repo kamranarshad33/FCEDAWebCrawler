@@ -28,7 +28,10 @@ export class WordsService implements OnInit{
     postWebsite(input: HTMLInputElement){
         const headers = new HttpHeaders({ 'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'});
-        return this.httpClient.post(this.url2, {"website": input.value}, 
+		const inputvalue = input.value;
+		const newvalue = inputvalue.toString();
+		const finalvalue = newvalue.replace(/(^\w+:|^)\/\//, '');
+        return this.httpClient.post(this.url2, {"website": finalvalue}, 
        {headers: headers}).toPromise().then(posts => {
            console.log(posts);
        });
