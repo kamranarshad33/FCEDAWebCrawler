@@ -19,7 +19,9 @@ import { WordsService } from './words.service';
       </div>
       </header>
   </div>  
-
+	<div>
+		<p>The crawler runs each morning at 6:00 AM Eastern Standard Time.</p>
+	</div>
   <div *ngIf = "!isShow">
   <div class="row">
   <table>
