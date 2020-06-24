@@ -15,7 +15,7 @@ export class WordsService implements OnInit{
 
     }
 
-    url: string = "http://54.80.194.9:5000/startCrawler";
+    url: string = "/api/startCrawler";
 
     getWords():Observable<Words[]>{
         return this.http.get<Words[]>(this.url);
