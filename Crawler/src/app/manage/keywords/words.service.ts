@@ -17,9 +17,9 @@ export class WordsService implements OnInit{
 
     }
 
-    url: string = "http://54.80.194.9:5000/keywords"
-    url2: string = "http://54.80.194.9:5000/addKeyword";
-    url3: string = "http://54.80.194.9:5000/deleteKeyword/";
+    url: string = "/api/keywords"
+    url2: string = "/api/addKeyword";
+    url3: string = "/api/deleteKeyword/";
    
 
 
@@ -48,7 +48,7 @@ export class WordsService implements OnInit{
        }
 
     deleteKeyWord(word): Observable<void> {
-        const url = `http://54.80.194.9:5000/deleteKeyword/${word}`;
+        const url = `/api/deleteKeyword/${word}`;
         return this.httpClient.delete<void>(url);
     }
  

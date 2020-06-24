@@ -13,7 +13,7 @@ export class WordsService implements OnInit{
     ngOnInit() {
 
     }
-    wordsUrl: string = "http://54.80.194.9:5000/runCrawler";
+    wordsUrl: string = "/api/runCrawler";
 
 
     getWords(){
